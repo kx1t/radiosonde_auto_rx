@@ -38,6 +38,7 @@ from queue import Queue
 from threading import Thread
 import flask
 from flask import request, abort, make_response, send_file
+from flask_cors import CORS
 from flask_socketio import SocketIO
 from werkzeug.middleware.proxy_fix import ProxyFix
 
@@ -48,6 +49,8 @@ cli.show_server_banner = lambda *x: None
 
 # Instantiate our Flask app.
 app = flask.Flask(__name__)
+# allow all CORS:
+CORS(app)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_prefix=1)
 app.config["SECRET_KEY"] = "secret!"
 app.config["TEMPLATES_AUTO_RELOAD"] = True
