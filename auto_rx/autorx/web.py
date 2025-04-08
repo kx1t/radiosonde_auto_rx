@@ -49,8 +49,6 @@ cli.show_server_banner = lambda *x: None
 
 # Instantiate our Flask app.
 app = flask.Flask(__name__)
-# allow all CORS:
-CORS(app)
 app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_prefix=1)
 app.config["SECRET_KEY"] = "secret!"
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -59,9 +57,10 @@ app.jinja_env.auto_reload = True
 flask_app_thread = None
 # A key that needs to be matched to allow shutdown.
 flask_shutdown_key = None
-
+# allow all CORS:
+cors = CORS(app, resources={r"/*": {"origins": "*"}})
 # SocketIO instance
-socketio = SocketIO(app, async_mode="threading")
+socketio = SocketIO(app, async_mode="threading", cors_allowed_origins="*")
 
 # Global store of telemetry data, which we will add data to and manage.
 # Under each key (which will be the sonde ID), we will have a dictionary containing:
