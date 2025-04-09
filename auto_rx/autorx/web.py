@@ -49,7 +49,7 @@ cli.show_server_banner = lambda *x: None
 
 # Instantiate our Flask app.
 app = flask.Flask(__name__)
-app.wsgi_app = ProxyFix(app.wsgi_app, x_for=2, x_port=2, x_host=2, x_proto=2, x_prefix=2)
+app.wsgi_app = ProxyFix(app.wsgi_app, x_proto=1, x_prefix=1)
 app.config["SECRET_KEY"] = "secret!"
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 app.jinja_env.auto_reload = True
